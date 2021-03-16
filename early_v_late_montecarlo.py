@@ -12,12 +12,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-df = pd.read_csv("C:/Users/CoeFamily/Documents/David College Class Work/WT_analysis/Coe_clusters_new.csv")
-df.columns = ["C","Clust"]
+df = pd.read_csv(
+    "C:/Users/CoeFamily/Documents/David College Class Work/WT_analysis/Coe_clusters_new.csv"
+)
+df.columns = ["C", "Clust"]
 vals = df["Clust"].values
-clust = list(map(int,vals))
+clust = list(map(int, vals))
 
-son = np.zeros((3640,2))
+son = np.zeros((3640, 2))
 i = 0
 son = clust[:]
 mon = []
@@ -25,68 +27,68 @@ mon = []
 k = 0
 y = 1
 while k < 3640:
-    if(y<=30):
-        mon.append('Sep')
-    elif(y > 30 and y<=61):
-        mon.append('Oct')
+    if y <= 30:
+        mon.append("Sep")
+    elif y > 30 and y <= 61:
+        mon.append("Oct")
     else:
-        mon.append('Nov')
+        mon.append("Nov")
     k = k + 1
     y = y + 1
-    if(y==92):
+    if y == 92:
         y = 1
 
 son = pd.Series(son)
 mon = pd.Series(mon)
-dff = pd.concat([son,mon],axis=1)   
-dff.columns = ['Cluster','Month']
+dff = pd.concat([son, mon], axis=1)
+dff.columns = ["Cluster", "Month"]
 
-dff.to_csv('cluster_month.csv')
+dff.to_csv("cluster_month.csv")
 
-group = dff.groupby('Month')
+group = dff.groupby("Month")
 
-s = group.get_group('Sep')
+s = group.get_group("Sep")
 temp1 = s.Cluster.values
 temp2 = s.Month.values
-s = pd.concat((pd.Series(temp1),pd.Series(temp2)),axis=1)
-o = group.get_group('Oct')
+s = pd.concat((pd.Series(temp1), pd.Series(temp2)), axis=1)
+o = group.get_group("Oct")
 temp1 = o.Cluster.values
 temp2 = o.Month.values
-o = pd.concat((pd.Series(temp1),pd.Series(temp2)),axis=1) 
-n = group.get_group('Nov')
+o = pd.concat((pd.Series(temp1), pd.Series(temp2)), axis=1)
+n = group.get_group("Nov")
 temp1 = n.Cluster.values
 temp2 = n.Month.values
-n = pd.concat((pd.Series(temp1),pd.Series(temp2)),axis=1)
+n = pd.concat((pd.Series(temp1), pd.Series(temp2)), axis=1)
 
 y = 1
 p = 0
 count = 0
 count1 = 0
 count2 = 0
-september = np.zeros((40,7))
-october = np.zeros((40,7))
-november = np.zeros((40,7))
+september = np.zeros((40, 7))
+october = np.zeros((40, 7))
+november = np.zeros((40, 7))
 
 while i < 3640:
     x = son[i]
-    if( y <= 30):
-        september[p,x-1] = september[p,x-1]+1
+    if y <= 30:
+        september[p, x - 1] = september[p, x - 1] + 1
         count = count + 1
-    elif(y>30 and y<=61):
-        october[p,x-1] = october[p,x-1]+1
+    elif y > 30 and y <= 61:
+        october[p, x - 1] = october[p, x - 1] + 1
         count1 = count1 + 1
     else:
-        november[p,x-1] = november[p,x-1]+1
+        november[p, x - 1] = november[p, x - 1] + 1
         count2 = count2 + 1
     y = y + 1
     i = i + 1
-    if(y == 92):
+    if y == 92:
         y = 1
         p = p + 1
 
 ind = []
 
-y = '1979'
+y = "1979"
 p = 0
 q = 0
 
@@ -97,112 +99,293 @@ while q < 120:
     y = int(y)
     y = y + 1
     y = str(y)
-    if(p == 40):
-        y = '1979'
+    if p == 40:
+        y = "1979"
         p = 0
 
-month2 = ['Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct',]
+month2 = [
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+]
 
-months = ['Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Sep','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Oct','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov','Nov',]
-overall = np.concatenate([september,october,november])
-df = pd.DataFrame(data=overall,columns=['WT1','WT2','WT3','WT4','WT5','WT6','WT7'])    
-df['EarlySeason'] = df['WT1'] + df['WT6'] + df['WT2']
-df['LateSeason'] = df['WT3'] + df['WT4'] + df['WT7'] + df['WT5']
-df['Month'] = months
-df['Year'] = ind
-df['Year'] = df['Year'].astype(int)
+months = [
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Sep",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Oct",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+    "Nov",
+]
+overall = np.concatenate([september, october, november])
+df = pd.DataFrame(
+    data=overall, columns=["WT1", "WT2", "WT3", "WT4", "WT5", "WT6", "WT7"]
+)
+df["EarlySeason"] = df["WT1"] + df["WT6"] + df["WT2"]
+df["LateSeason"] = df["WT3"] + df["WT4"] + df["WT7"] + df["WT5"]
+df["Month"] = months
+df["Year"] = ind
+df["Year"] = df["Year"].astype(int)
 
-df.to_csv('dates_months.csv')
+df.to_csv("dates_months.csv")
 
-pre = df[df.Year <= 1998].groupby('Month').sum()
-post = df[df.Year > 1998].groupby('Month').sum()
+pre = df[df.Year <= 1998].groupby("Month").sum()
+post = df[df.Year > 1998].groupby("Month").sum()
 
-es_s_pre = pre.loc['Sep'].EarlySeason
-es_o_pre = pre.loc['Oct'].EarlySeason
-es_n_pre = pre.loc['Nov'].EarlySeason
+es_s_pre = pre.loc["Sep"].EarlySeason
+es_o_pre = pre.loc["Oct"].EarlySeason
+es_n_pre = pre.loc["Nov"].EarlySeason
 
-es_s_post = post.loc['Sep'].EarlySeason
-es_o_post = post.loc['Oct'].EarlySeason
-es_n_post = post.loc['Nov'].EarlySeason
+es_s_post = post.loc["Sep"].EarlySeason
+es_o_post = post.loc["Oct"].EarlySeason
+es_n_post = post.loc["Nov"].EarlySeason
 
-ls_s_pre = pre.loc['Sep'].LateSeason
-ls_o_pre = pre.loc['Oct'].LateSeason
-ls_n_pre = pre.loc['Nov'].LateSeason
+ls_s_pre = pre.loc["Sep"].LateSeason
+ls_o_pre = pre.loc["Oct"].LateSeason
+ls_n_pre = pre.loc["Nov"].LateSeason
 
-ls_s_post = post.loc['Sep'].LateSeason
-ls_o_post = post.loc['Oct'].LateSeason
-ls_n_post = post.loc['Nov'].LateSeason
+ls_s_post = post.loc["Sep"].LateSeason
+ls_o_post = post.loc["Oct"].LateSeason
+ls_n_post = post.loc["Nov"].LateSeason
 
-wt5_s_pre = pre.loc['Sep'].WT5
-wt5_o_pre = pre.loc['Oct'].WT5
-wt5_n_pre = pre.loc['Nov'].WT5
+wt5_s_pre = pre.loc["Sep"].WT5
+wt5_o_pre = pre.loc["Oct"].WT5
+wt5_n_pre = pre.loc["Nov"].WT5
 
-wt5_s_post = post.loc['Sep'].WT5
-wt5_o_post = post.loc['Oct'].WT5
-wt5_n_post = post.loc['Nov'].WT5
+wt5_s_post = post.loc["Sep"].WT5
+wt5_o_post = post.loc["Oct"].WT5
+wt5_n_post = post.loc["Nov"].WT5
 
-wt2_s_pre = pre.loc['Sep'].WT2
-wt2_o_pre = pre.loc['Oct'].WT2
-wt2_n_pre = pre.loc['Nov'].WT2
+wt2_s_pre = pre.loc["Sep"].WT2
+wt2_o_pre = pre.loc["Oct"].WT2
+wt2_n_pre = pre.loc["Nov"].WT2
 
-wt2_s_post = post.loc['Sep'].WT2
-wt2_o_post = post.loc['Oct'].WT2
-wt2_n_post = post.loc['Nov'].WT2
+wt2_s_post = post.loc["Sep"].WT2
+wt2_o_post = post.loc["Oct"].WT2
+wt2_n_post = post.loc["Nov"].WT2
 
-wt1_s_pre = pre.loc['Sep'].WT1
-wt1_o_pre = pre.loc['Oct'].WT1
-wt1_n_pre = pre.loc['Nov'].WT1
+wt1_s_pre = pre.loc["Sep"].WT1
+wt1_o_pre = pre.loc["Oct"].WT1
+wt1_n_pre = pre.loc["Nov"].WT1
 
-wt1_s_post = post.loc['Sep'].WT1
-wt1_o_post = post.loc['Oct'].WT1
-wt1_n_post = post.loc['Nov'].WT1
+wt1_s_post = post.loc["Sep"].WT1
+wt1_o_post = post.loc["Oct"].WT1
+wt1_n_post = post.loc["Nov"].WT1
 
-wt3_s_pre = pre.loc['Sep'].WT3
-wt3_o_pre = pre.loc['Oct'].WT3
-wt3_n_pre = pre.loc['Nov'].WT3
+wt3_s_pre = pre.loc["Sep"].WT3
+wt3_o_pre = pre.loc["Oct"].WT3
+wt3_n_pre = pre.loc["Nov"].WT3
 
-wt3_s_post = post.loc['Sep'].WT3
-wt3_o_post = post.loc['Oct'].WT3
-wt3_n_post = post.loc['Nov'].WT3
+wt3_s_post = post.loc["Sep"].WT3
+wt3_o_post = post.loc["Oct"].WT3
+wt3_n_post = post.loc["Nov"].WT3
 
-wt4_s_pre = pre.loc['Sep'].WT4
-wt4_o_pre = pre.loc['Oct'].WT4
-wt4_n_pre = pre.loc['Nov'].WT4
+wt4_s_pre = pre.loc["Sep"].WT4
+wt4_o_pre = pre.loc["Oct"].WT4
+wt4_n_pre = pre.loc["Nov"].WT4
 
-wt4_s_post = post.loc['Sep'].WT4
-wt4_o_post = post.loc['Oct'].WT4
-wt4_n_post = post.loc['Nov'].WT4
+wt4_s_post = post.loc["Sep"].WT4
+wt4_o_post = post.loc["Oct"].WT4
+wt4_n_post = post.loc["Nov"].WT4
 
-wt6_s_pre = pre.loc['Sep'].WT6
-wt6_o_pre = pre.loc['Oct'].WT6
-wt6_n_pre = pre.loc['Nov'].WT6
+wt6_s_pre = pre.loc["Sep"].WT6
+wt6_o_pre = pre.loc["Oct"].WT6
+wt6_n_pre = pre.loc["Nov"].WT6
 
-wt6_s_post = post.loc['Sep'].WT6
-wt6_o_post = post.loc['Oct'].WT6
-wt6_n_post = post.loc['Nov'].WT6
+wt6_s_post = post.loc["Sep"].WT6
+wt6_o_post = post.loc["Oct"].WT6
+wt6_n_post = post.loc["Nov"].WT6
 
-wt7_s_pre = pre.loc['Sep'].WT7
-wt7_o_pre = pre.loc['Oct'].WT7
-wt7_n_pre = pre.loc['Nov'].WT7
+wt7_s_pre = pre.loc["Sep"].WT7
+wt7_o_pre = pre.loc["Oct"].WT7
+wt7_n_pre = pre.loc["Nov"].WT7
 
-wt7_s_post = post.loc['Sep'].WT7
-wt7_o_post = post.loc['Oct'].WT7
-wt7_n_post = post.loc['Nov'].WT7
+wt7_s_post = post.loc["Sep"].WT7
+wt7_o_post = post.loc["Oct"].WT7
+wt7_n_post = post.loc["Nov"].WT7
 
-#Take the values for each month and divide by the total number of days of that month throughout the time period. Then multiply by 100 for a percentage
-pre_s = pre.loc['Sep'] * 100 / 600
-pre_o = pre.loc['Oct'] * 100 / 620
-pre_n = pre.loc['Nov'] * 100 / 600
+# Take the values for each month and divide by the total number of days of that month throughout the time period. Then multiply by 100 for a percentage
+pre_s = pre.loc["Sep"] * 100 / 600
+pre_o = pre.loc["Oct"] * 100 / 620
+pre_n = pre.loc["Nov"] * 100 / 600
 
-post_s = post.loc['Sep'] * 100 / 600
-post_o = post.loc['Oct'] * 100 / 620
-post_n = post.loc['Nov'] * 100 / 600
+post_s = post.loc["Sep"] * 100 / 600
+post_o = post.loc["Oct"] * 100 / 620
+post_n = post.loc["Nov"] * 100 / 600
 
-#Put them back into new arrays
-pre = pd.concat((pre_s,pre_o,pre_n),axis=1).transpose()
-post = pd.concat((post_s,post_o,post_n),axis=1).transpose()
+# Put them back into new arrays
+pre = pd.concat((pre_s, pre_o, pre_n), axis=1).transpose()
+post = pd.concat((post_s, post_o, post_n), axis=1).transpose()
 
-#Pull out the individual arrays we need
+# Pull out the individual arrays we need
 pre_es = pre.EarlySeason
 pre_ls = pre.LateSeason
 pre_wt5 = pre.WT5
@@ -223,28 +406,28 @@ post_wt4 = post.WT4
 post_wt6 = post.WT6
 post_wt7 = post.WT7
 
-#Put together the first 20 and last 20 years into one dataframe
+# Put together the first 20 and last 20 years into one dataframe
 
-total_es = pd.concat([pre_es,post_es],axis=1)
-total_ls = pd.concat([pre_ls,post_ls],axis=1)    
-total_wt5 = pd.concat([pre_wt5,post_wt5],axis=1)
-total_wt2 = pd.concat([pre_wt2,post_wt2],axis=1)
-total_wt1 = pd.concat([pre_wt1,post_wt1],axis=1)
-total_wt3 = pd.concat([pre_wt3,post_wt3],axis=1)
-total_wt4 = pd.concat([pre_wt4,post_wt4],axis=1)
-total_wt6 = pd.concat([pre_wt6,post_wt6],axis=1)
-total_wt7 = pd.concat([pre_wt7,post_wt7],axis=1)
+total_es = pd.concat([pre_es, post_es], axis=1)
+total_ls = pd.concat([pre_ls, post_ls], axis=1)
+total_wt5 = pd.concat([pre_wt5, post_wt5], axis=1)
+total_wt2 = pd.concat([pre_wt2, post_wt2], axis=1)
+total_wt1 = pd.concat([pre_wt1, post_wt1], axis=1)
+total_wt3 = pd.concat([pre_wt3, post_wt3], axis=1)
+total_wt4 = pd.concat([pre_wt4, post_wt4], axis=1)
+total_wt6 = pd.concat([pre_wt6, post_wt6], axis=1)
+total_wt7 = pd.concat([pre_wt7, post_wt7], axis=1)
 
-#Name the columns appropriately
-total_es.columns = ['1979-1998','1999-2018']
-total_ls.columns = ['1979-1998','1999-2018']
-total_wt5.columns = ['1979-1998','1999-2018']
-total_wt2.columns = ['1979-1998','1999-2018']
-total_wt1.columns = ['1979-1998','1999-2018']
-total_wt3.columns = ['1979-1998','1999-2018']
-total_wt4.columns = ['1979-1998','1999-2018']
-total_wt6.columns = ['1979-1998','1999-2018']
-total_wt7.columns = ['1979-1998','1999-2018']
+# Name the columns appropriately
+total_es.columns = ["1979-1998", "1999-2018"]
+total_ls.columns = ["1979-1998", "1999-2018"]
+total_wt5.columns = ["1979-1998", "1999-2018"]
+total_wt2.columns = ["1979-1998", "1999-2018"]
+total_wt1.columns = ["1979-1998", "1999-2018"]
+total_wt3.columns = ["1979-1998", "1999-2018"]
+total_wt4.columns = ["1979-1998", "1999-2018"]
+total_wt6.columns = ["1979-1998", "1999-2018"]
+total_wt7.columns = ["1979-1998", "1999-2018"]
 
 # j = 0
 # september = np.zeros((1000,7))
@@ -813,79 +996,158 @@ total_wt7.columns = ['1979-1998','1999-2018']
 #
 # plt.savefig('monte_carlo_change_per_wt.png',bbox_inches='tight')
 
-df_early = df.groupby('Year').sum().EarlySeason
-df_late = df.groupby('Year').sum().LateSeason
+df_early = df.groupby("Year").sum().EarlySeason
+df_late = df.groupby("Year").sum().LateSeason
 
 
-sep_month = df.groupby('Month').groups['Sep']
-oct_month = df.groupby('Month').groups['Oct']
-nov_month = df.groupby('Month').groups['Nov']
+sep_month = df.groupby("Month").groups["Sep"]
+oct_month = df.groupby("Month").groups["Oct"]
+nov_month = df.groupby("Month").groups["Nov"]
 
-indx = ['1979','1980','1981','1982','1983','1984','1985','1986','1987','1988','1989','1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018']
+indx = [
+    "1979",
+    "1980",
+    "1981",
+    "1982",
+    "1983",
+    "1984",
+    "1985",
+    "1986",
+    "1987",
+    "1988",
+    "1989",
+    "1990",
+    "1991",
+    "1992",
+    "1993",
+    "1994",
+    "1995",
+    "1996",
+    "1997",
+    "1998",
+    "1999",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "2010",
+    "2011",
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+]
 
 fig, axes = plt.subplots(nrows=2, ncols=2)
-fig.subplots_adjust(hspace=.75,wspace=0.75,top=.8)
+fig.subplots_adjust(hspace=0.75, wspace=0.75, top=0.8)
 
-essep = df.EarlySeason[sep_month].rolling(5,min_periods=1).mean()
+essep = df.EarlySeason[sep_month].rolling(5, min_periods=1).mean()
 essep.index = indx
 
-esoct = df.EarlySeason[oct_month].rolling(5,min_periods=1).mean()
+esoct = df.EarlySeason[oct_month].rolling(5, min_periods=1).mean()
 esoct.index = indx
 
-esnov = df.EarlySeason[nov_month].rolling(5,min_periods=1).mean()
+esnov = df.EarlySeason[nov_month].rolling(5, min_periods=1).mean()
 esnov.index = indx
 
-lssep = df.LateSeason[sep_month].rolling(5,min_periods=1).mean()
+lssep = df.LateSeason[sep_month].rolling(5, min_periods=1).mean()
 lssep.index = indx
 
-lsoct = df.LateSeason[oct_month].rolling(5,min_periods=1).mean()
+lsoct = df.LateSeason[oct_month].rolling(5, min_periods=1).mean()
 lsoct.index = indx
 
-lsnov = df.LateSeason[nov_month].rolling(5,min_periods=1).mean()
+lsnov = df.LateSeason[nov_month].rolling(5, min_periods=1).mean()
 lsnov.index = indx
 
-es_overall = df_early.rolling(5,min_periods=1).mean()
+es_overall = df_early.rolling(5, min_periods=1).mean()
 es_overall.index = indx
 
-ls_overall = df_late.rolling(5,min_periods=1).mean()
+ls_overall = df_late.rolling(5, min_periods=1).mean()
 ls_overall.index = indx
-essep.plot(kind='line',ax=axes[0,0],ylim = [0,40],legend=False,rot=90,color='black')
-lssep.plot(kind='line',ax=axes[0,0],ylim = [0,40],legend=False,rot=90,color='red')
-esoct.plot(kind='line',ax=axes[0,1],ylim = [0,40],legend=False,rot=90,color='black')
-lsoct.plot(kind='line',ax=axes[0,1],ylim = [0,40],legend=False,rot=90,color='red')
-esnov.plot(kind='line',ax=axes[1,0],ylim = [0,40],legend=False,rot=90,color='black')
-lsnov.plot(kind='line',ax=axes[1,0],ylim = [0,40],legend=False,rot=90,color='red')
-es_overall.plot(kind='line',ax=axes[1,1],ylim = [0,95],legend=False,rot=90,color='black')
-ls_overall.plot(kind='line',ax=axes[1,1],ylim = [0,95],legend=False,rot=90,color='red')
-axes[0,0].set_ylabel("# of Days")
-axes[0,1].set_ylabel("# of Days")
-axes[1,0].set_ylabel("# of Days")
-axes[1,1].set_ylabel("# of Days")
-axes[0,0].set_title("September")
-axes[0,1].set_title("October")
-axes[1,0].set_title("November")
-axes[1,1].set_title("Overall")
-box = axes[0,0].get_position()
-axes[0,0].set_position([box.x0,box.y0,box.width*0.8,box.height])
-box = axes[0,1].get_position()
-axes[0,1].set_position([box.x0,box.y0,box.width*0.8,box.height])
-box = axes[1,0].get_position()
-axes[1,0].set_position([box.x0,box.y0,box.width*0.8,box.height])
-box = axes[1,1].get_position()
-axes[1,1].set_position([box.x0,box.y0,box.width*0.8,box.height])
-axes[0,0].legend(loc='center left', bbox_to_anchor=(1.0,0.5), ncol=1, fancybox=True, shadow=True,prop={'size': 6})
-axes[0,1].legend(loc='center left', bbox_to_anchor=(1.0,0.5), ncol=1, fancybox=True, shadow=True,prop={'size': 6})
-axes[1,0].legend(loc='center left', bbox_to_anchor=(1.0,0.5), ncol=1, fancybox=True, shadow=True,prop={'size': 6})
-axes[1,1].legend(loc='center left', bbox_to_anchor=(1.0,0.5), ncol=1, fancybox=True, shadow=True,prop={'size': 6})
-#axes[0,0].legend(loc='best')
-#axes[0,1].legend(loc='best')
-#axes[1,0].legend(loc='best')
-#axes[1,1].legend(loc='best')
-plt.suptitle('Early and Late Season WT Days per Month')
+essep.plot(
+    kind="line", ax=axes[0, 0], ylim=[0, 40], legend=False, rot=90, color="black"
+)
+lssep.plot(kind="line", ax=axes[0, 0], ylim=[0, 40], legend=False, rot=90, color="red")
+esoct.plot(
+    kind="line", ax=axes[0, 1], ylim=[0, 40], legend=False, rot=90, color="black"
+)
+lsoct.plot(kind="line", ax=axes[0, 1], ylim=[0, 40], legend=False, rot=90, color="red")
+esnov.plot(
+    kind="line", ax=axes[1, 0], ylim=[0, 40], legend=False, rot=90, color="black"
+)
+lsnov.plot(kind="line", ax=axes[1, 0], ylim=[0, 40], legend=False, rot=90, color="red")
+es_overall.plot(
+    kind="line", ax=axes[1, 1], ylim=[0, 95], legend=False, rot=90, color="black"
+)
+ls_overall.plot(
+    kind="line", ax=axes[1, 1], ylim=[0, 95], legend=False, rot=90, color="red"
+)
+axes[0, 0].set_ylabel("# of Days")
+axes[0, 1].set_ylabel("# of Days")
+axes[1, 0].set_ylabel("# of Days")
+axes[1, 1].set_ylabel("# of Days")
+axes[0, 0].set_title("September")
+axes[0, 1].set_title("October")
+axes[1, 0].set_title("November")
+axes[1, 1].set_title("Overall")
+box = axes[0, 0].get_position()
+axes[0, 0].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+box = axes[0, 1].get_position()
+axes[0, 1].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+box = axes[1, 0].get_position()
+axes[1, 0].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+box = axes[1, 1].get_position()
+axes[1, 1].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+axes[0, 0].legend(
+    loc="center left",
+    bbox_to_anchor=(1.0, 0.5),
+    ncol=1,
+    fancybox=True,
+    shadow=True,
+    prop={"size": 6},
+)
+axes[0, 1].legend(
+    loc="center left",
+    bbox_to_anchor=(1.0, 0.5),
+    ncol=1,
+    fancybox=True,
+    shadow=True,
+    prop={"size": 6},
+)
+axes[1, 0].legend(
+    loc="center left",
+    bbox_to_anchor=(1.0, 0.5),
+    ncol=1,
+    fancybox=True,
+    shadow=True,
+    prop={"size": 6},
+)
+axes[1, 1].legend(
+    loc="center left",
+    bbox_to_anchor=(1.0, 0.5),
+    ncol=1,
+    fancybox=True,
+    shadow=True,
+    prop={"size": 6},
+)
+# axes[0,0].legend(loc='best')
+# axes[0,1].legend(loc='best')
+# axes[1,0].legend(loc='best')
+# axes[1,1].legend(loc='best')
+plt.suptitle("Early and Late Season WT Days per Month")
 
 
-#from pandas.plotting import autocorrelation_plot
+# from pandas.plotting import autocorrelation_plot
 
-#autocorrelation_plot(df.EarlySeason)
+# autocorrelation_plot(df.EarlySeason)
 
-plt.savefig('monthly_evl_montecarlo.png')
+plt.savefig("monthly_evl_montecarlo.png")

@@ -10,94 +10,109 @@ from netCDF4 import Dataset
 import matplotlib.pyplot as plt
 
 # Create 3X3 sub plots
-gs = gridspec.GridSpec(3,3)
+gs = gridspec.GridSpec(3, 3)
 
-#Import the data
-dff = pd.read_csv('teleconnections_total.csv')
+# Import the data
+dff = pd.read_csv("teleconnections_total.csv")
 
 df = pd.read_csv("clust_vals.csv")
-df.columns = ["C","Clust"]
+df.columns = ["C", "Clust"]
 vals = df["Clust"].values
-clustvals = list(map(int,vals))
+clustvals = list(map(int, vals))
 clustvals = [x + 1 for x in clustvals]
-clustvals = [2 if x == 1 else 5 if x == 2 else 7 if x == 3 else 1 if x == 4 else 4 if x == 5 else 3 if x == 6 else 6 for x in clustvals]
+clustvals = [
+    2
+    if x == 1
+    else 5
+    if x == 2
+    else 7
+    if x == 3
+    else 1
+    if x == 4
+    else 4
+    if x == 5
+    else 3
+    if x == 6
+    else 6
+    for x in clustvals
+]
 ldf = clustvals
 
-#Make the directory to hold the images
+# Make the directory to hold the images
 
-#Check to see if out directory exists and if not, make it
+# Check to see if out directory exists and if not, make it
 outdir = "F:/son_teleconnection_images"
 
 if not os.path.exists(outdir):
     os.makedirs(outdir)
 
-#Load in the data
-#Get our LAT/LON grid
-lats = Dataset("F:/ERA5/h500_son/h5001979.nc").variables['latitude'][160:241]
-lons = Dataset("F:/ERA5/h500_son/h5001979.nc").variables['longitude'][1080:1201]
-LON, LAT = np.meshgrid(lons,lats)
+# Load in the data
+# Get our LAT/LON grid
+lats = Dataset("F:/ERA5/h500_son/h5001979.nc").variables["latitude"][160:241]
+lons = Dataset("F:/ERA5/h500_son/h5001979.nc").variables["longitude"][1080:1201]
+LON, LAT = np.meshgrid(lons, lats)
 
-#Initialize our arrays to hold the variables
-h500 = np.zeros((3640,81,121))
-mslp = np.zeros((3640,81,121))
-u850 = np.zeros((3640,81,121))
-v850 = np.zeros((3640,81,121))
-h500m = np.zeros((81,121))
-mslpm = np.zeros((81,121))
-u850m = np.zeros((81,121))
-v850m = np.zeros((81,121))
+# Initialize our arrays to hold the variables
+h500 = np.zeros((3640, 81, 121))
+mslp = np.zeros((3640, 81, 121))
+u850 = np.zeros((3640, 81, 121))
+v850 = np.zeros((3640, 81, 121))
+h500m = np.zeros((81, 121))
+mslpm = np.zeros((81, 121))
+u850m = np.zeros((81, 121))
+v850m = np.zeros((81, 121))
 
-#Initialize our counting variable
+# Initialize our counting variable
 count = 0
 
-#Fill our arrays with data
-for i in range(1979,2019):
-    #put together strings for the filenames based on the year
-    start = 'F:/ERA5/h500_son/h500'
-    start2 = 'F:/ERA5/u850_son/u850'
-    start3 = 'F:/ERA5/v850_son/v850'
-    start4 = 'F:/ERA5/mslp_son/mslp'
-    next = '.nc'
+# Fill our arrays with data
+for i in range(1979, 2019):
+    # put together strings for the filenames based on the year
+    start = "F:/ERA5/h500_son/h500"
+    start2 = "F:/ERA5/u850_son/u850"
+    start3 = "F:/ERA5/v850_son/v850"
+    start4 = "F:/ERA5/mslp_son/mslp"
+    next = ".nc"
     filename = start + str(i) + next
     filename2 = start2 + str(i) + next
     filename3 = start3 + str(i) + next
-    filename4 = start4 +  str(i) + next
+    filename4 = start4 + str(i) + next
 
-    #now we fill them. Take 12z data for each day for each year
+    # now we fill them. Take 12z data for each day for each year
     j = 11
-    while j <= len(Dataset(filename).variables['z'][:,0,0]):
-        #Put each data array into a temp array
-        tmp = Dataset(filename).variables['z'][j,160:241,1080:1201]
+    while j <= len(Dataset(filename).variables["z"][:, 0, 0]):
+        # Put each data array into a temp array
+        tmp = Dataset(filename).variables["z"][j, 160:241, 1080:1201]
         tmph = tmp
-        tmp = Dataset(filename2).variables['u'][j,160:241,1080:1201]
+        tmp = Dataset(filename2).variables["u"][j, 160:241, 1080:1201]
         tmpu = tmp
-        tmp = Dataset(filename3).variables['v'][j,160:241,1080:1201]
+        tmp = Dataset(filename3).variables["v"][j, 160:241, 1080:1201]
         tmpv = tmp
-        tmp = Dataset(filename4).variables['msl'][j,160:241,1080:1201]
+        tmp = Dataset(filename4).variables["msl"][j, 160:241, 1080:1201]
         tmpm = tmp
         for a in range(121):
             for b in range(81):
-                #Fill the arrays with the data from the temp array
-                #Fill the mean arrays as well with the sum of the data
-                h500[count,b,a] = tmph[b,a] / 98.1
-                mslp[count,b,a] = tmpm[b,a] / 100
-                u850[count,b,a] = tmpu[b,a]
-                v850[count,b,a] = tmpv[b,a]
-                h500m[b,a] = h500m[b,a] + tmph[b,a] / 98.1
-                mslpm[b,a] = mslpm[b,a] + tmpm[b,a] / 100
-                u850m[b,a] = u850m[b,a] + tmpu[b,a]
-                v850m[b,a] = v850m[b,a] + tmpv[b,a]
+                # Fill the arrays with the data from the temp array
+                # Fill the mean arrays as well with the sum of the data
+                h500[count, b, a] = tmph[b, a] / 98.1
+                mslp[count, b, a] = tmpm[b, a] / 100
+                u850[count, b, a] = tmpu[b, a]
+                v850[count, b, a] = tmpv[b, a]
+                h500m[b, a] = h500m[b, a] + tmph[b, a] / 98.1
+                mslpm[b, a] = mslpm[b, a] + tmpm[b, a] / 100
+                u850m[b, a] = u850m[b, a] + tmpu[b, a]
+                v850m[b, a] = v850m[b, a] + tmpv[b, a]
         count = count + 1
         j = j + 24
 
-#Now take the mean arrays and divide by the count to get the seasonal mean
+# Now take the mean arrays and divide by the count to get the seasonal mean
 
 h500m = h500m / count
 mslpm = mslpm / count
 u850m = u850m / count
 v850m = v850m / count
 
-#Now find the data for each WT
+# Now find the data for each WT
 wt_list = []
 
 # for i in range(1,8,1):
