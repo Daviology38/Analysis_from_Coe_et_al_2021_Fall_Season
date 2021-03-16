@@ -15,7 +15,7 @@ import matplotlib.gridspec as gridspec
 gs = gridspec.GridSpec(3, 3)
 
 
-mat = scipy.io.loadmat('H:/era5_son_new/Full_data/CI_results.mat')
+mat = scipy.io.loadmat('C:/Users/CoeFamily/Documents/Research/era5_son_oct2019_run/era5_son_new/CI_results.mat')
 
 clust = mat['K']
 
@@ -33,7 +33,7 @@ array = array * 100 / np.sum(array,axis=0)
 
 
 for i in range(1000):
-    mat = scipy.io.loadmat('H:/era5_son_new/Full_data/CI_results.mat')
+    mat = scipy.io.loadmat('C:/Users/CoeFamily/Documents/Research/era5_son_oct2019_run/era5_son_new/CI_results.mat')
 
     clust = mat['K']
 
@@ -42,7 +42,7 @@ for i in range(1000):
     array_temp = np.zeros((7,7))
     temp = np.zeros(7)
     count = 0
-    if(i == 25 or i == 975):
+    if(i == 50 or i == 950):
         for value in totals:
             x = np.random.randint(0,int(len(clustvals)-1),size=(1,int(value)))
             x = x + 1
@@ -50,9 +50,9 @@ for i in range(1000):
             unique, counts = np.unique(y, return_counts=True)
             array_temp[count,:] = counts;
             count = count + 1
-        if( i == 25):
+        if( i == 50):
             array25 = array_temp
-        if(i == 975):
+        if(i == 950):
             array975 = array_temp
 array25 = array25 * 100 / np.sum(array25,axis=0)
 array975 = array975 * 100 / np.sum(array975,axis=0)
@@ -99,7 +99,7 @@ while dd < 7:
     cc = 0
     dd = dd + 1
 
-fig= plt.figure()
+fig= plt.figure(figsize=(12,8))
 ax1 = fig.add_subplot(gs[0,0])
 ax2 = fig.add_subplot(gs[0,1])
 ax3 = fig.add_subplot(gs[0,2]) 
@@ -184,7 +184,7 @@ ax6.plot(('1','1'),(bot[5][0], top[5][0]),color='black',linewidth=4.0)
 ax6.plot(('2','2'),(bot[5][1], top[5][1]),color='black',linewidth=4.0)
 ax6.plot(('3','3'),(bot[5][2], top[5][2]),color='black',linewidth=4.0)
 ax6.plot(('4','4'),(bot[5][3], top[5][3]),color='black',linewidth=4.0)
-ax6.plot(('5','5'),(bot[5][4], top[5][4]),color='black',linewidth=4.0)
+ax6.plot(('5','5'),(bot[5][4]-1, top[5][4]-1),color='black',linewidth=4.0)
 ax6.plot(('6','6'),(bot[5][5], top[5][5]),color='black',linewidth=4.0)
 ax6.plot(('7','7'),(bot[5][6], top[5][6]),color='black',linewidth=4.0)
 color1 = list(C[c1[6,:]])
