@@ -2495,7 +2495,7 @@ ax[0, 0].set_title("H500", fontsize=16)
 ax[0, 0].set_ylabel("% of days", fontsize=14)
 ax[0, 0].set_xlabel("hPa", fontsize=14)
 
-binsrmse = np.arange(0, 500, 25)
+binsrmse = np.arange(0, 1500, 100)
 tmp = nrmsem[:]
 tmp2 = n2rmsem[:]
 hist, bins = np.histogram(tmp, bins=binsrmse)
