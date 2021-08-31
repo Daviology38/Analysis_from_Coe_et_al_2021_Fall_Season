@@ -3,7 +3,6 @@
 # Import a bunch of stuff
 import os
 
-os.environ["PROJ_LIB"] = r"c:\Users\CoeFamily\Anaconda3\envs\meteorology\Library\share"
 import numpy as np
 import matplotlib as plt
 from netCDF4 import Dataset
@@ -73,22 +72,22 @@ if not os.path.exists(outdir):
 
 # Load in the data using xarray
 h500 = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["h500_1265"]
 mslp = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["mslp_1265"]
 u850 = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["u850_1265"]
 v850 = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["v850_1265"]
 t = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["t_1265"]
 p = sio.loadmat(
-    "C:/Users/wayne/OneDrive - University of Massachusetts Lowell - UMass Lowell/Autumn WTs/sequence_1265.mat"
+    "sequence_1265.mat"
 )["p_1265"]
 
 h500 = h500[[0, 3, 1, 2], :]

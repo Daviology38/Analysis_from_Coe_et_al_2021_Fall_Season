@@ -3,7 +3,6 @@
 # Import a bunch of stuff
 import os
 
-os.environ["PROJ_LIB"] = r"c:\Users\CoeFamily\Anaconda3\envs\meteorology\Library\share"
 import numpy as np
 import matplotlib as plt
 from netCDF4 import Dataset

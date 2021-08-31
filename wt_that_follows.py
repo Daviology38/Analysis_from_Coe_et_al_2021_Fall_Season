@@ -16,7 +16,7 @@ gs = gridspec.GridSpec(3, 3)
 
 
 mat = scipy.io.loadmat(
-    "C:/Users/CoeFamily/Documents/Research/era5_son_oct2019_run/era5_son_new/CI_results.mat"
+    "Cluster Output/CI_results.mat"
 )
 
 clust = mat["K"]
@@ -36,7 +36,7 @@ array = array * 100 / np.sum(array, axis=0)
 
 for i in range(1000):
     mat = scipy.io.loadmat(
-        "C:/Users/CoeFamily/Documents/Research/era5_son_oct2019_run/era5_son_new/CI_results.mat"
+        "Cluster Output/CI_results.mat"
     )
 
     clust = mat["K"]
